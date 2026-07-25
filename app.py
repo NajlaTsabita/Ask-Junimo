@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 import logging
-import assistant as Assistant
+from assistant import Assistant
 from gui import AssistantGUI
 from prompts import SYSTEM_PROMPT, WELCOME_MESSAGE
 from langchain_groq import ChatGroq
@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=logging.INFO)
 
-    st.set_page_config(page_title="Aks Junimo", page_icon="🌾", layout="wide")
+    st.set_page_config(page_title="Aks Junimo", layout="wide")
 
     @st.cache_data(ttl=3600, show_spinner="Loading Player Data... ")
     def get_player_data():
@@ -32,7 +32,7 @@ if __name__ == "__main__":
             text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200)
             splits = text_splitter.split_documents(docs)
 
-            embaddings_function = OpenAIEmbeddings()
+            embaddings_function = GoogleGenerativeAIEmbeddings(model="gemini-embedding-001")
             persistent_path = "./data/vectorstore" 
 
             vectorstore = Chroma.from_documents(
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "ai", "content": WELCOME_MESSAGE}]
 
-    llm = ChatGroq()
+    llm = ChatGroq(model="openai/gpt-oss-120b")
 
     assistant = Assistant(
         system_prompt=SYSTEM_PROMPT,
@@ -66,3 +66,4 @@ if __name__ == "__main__":
     )
 
     gui = AssistantGUI(assistant)
+    gui.render()

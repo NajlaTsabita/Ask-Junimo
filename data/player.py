@@ -26,7 +26,11 @@ def generate_player_data(num_players=1):
             "current_season": random.choice(["Spring", "Summer", "Fall", "Winter"]),
             "current_year": random.randint(1, 3),
             "current_gold": random.randint(1000, 50000),
-            "favorite_thing": random.choice(["Coding", "Coffee", "Pizza", "Stardrop", "Gaming"]),
+            "favorite_thing": random.choice(["Stardew Valley", "Coffee", "Pizza", "Stardrop", 
+                                             "Gaming", "Fishing", "Farming", "Mining", "Foraging", 
+                                             "Combat", "Abigail", "Emily", "Leah", "Penny",
+                                             "Maru", "Sam", "Sebastian", "Shane", "Harvey", 
+                                             "Elliott", "Alex", "Haley", "Krobus"]),
             "pet_type": random.choice(["Dog", "Cat"]),
             "skills": {
                 "farming": random.randint(1, 10),

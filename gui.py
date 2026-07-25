@@ -38,16 +38,36 @@ class AssistantGUI:
 
     def render(self):
         with st.sidebar:
-            st.logo("./data/stardew_logo.png")
+            st.logo("./data/junimo.png")
 
             st.title("Ask Junimo")
             st.subheader("Player Information")
-            if isinstance(self.player_information, dict):
-                for key, value in self.player_information.items():
-                    clean_key = str(key).replace("_", " ").title()
-                    st.markdown(f"**{clean_key}:** {value}")
-            else:
-                st.write(self.player_information)
+
+            player = self.player_information
+            st.markdown(f"**👤 Name:** {player['player_name']}")
+            st.markdown(f"**🏡 Farm:** {player['farm_name']} ({player['farm_type']})")
+            st.markdown(f"**🗓️ Time:** {player['current_season']}, Year {player['current_year']}")
+            st.markdown(f"**🐶 Pet:** {player['pet_type']}")
+            st.markdown(f"**⭐ Favorite:** {player['favorite_thing']}")
+            
+  
+            st.metric(label="💰 Current Gold", value=f"{player['current_gold']:,} G")
+
+            with st.expander("💪 Player Skills (Level 1-10)"):
+                st.caption(f"Farming (Lv {player['skills']['farming']})")
+                st.progress(player['skills']['farming'] * 10) 
+                
+                st.caption(f"Mining (Lv {player['skills']['mining']})")
+                st.progress(player['skills']['mining'] * 10)
+                
+                st.caption(f"Foraging (Lv {player['skills']['foraging']})")
+                st.progress(player['skills']['foraging'] * 10)
+                
+                st.caption(f"Fishing (Lv {player['skills']['fishing']})")
+                st.progress(player['skills']['fishing'] * 10)
+                
+                st.caption(f"Combat (Lv {player['skills']['combat']})")
+                st.progress(player['skills']['combat'] * 10)
 
         self.render_messages()
 

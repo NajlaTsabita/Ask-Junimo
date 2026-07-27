@@ -1,4 +1,6 @@
 import streamlit as st
+from data.database import delete_player
+from player_form import render_player_form
 
 class AssistantGUI:
     def __init__(self, assistant):
@@ -69,8 +71,24 @@ class AssistantGUI:
                 st.caption(f"Combat (Lv {player['skills']['combat']})")
                 st.progress(player['skills']['combat'] * 10)
 
+            with st.expander("✏️ Edit Data Player"):
+                updated_player = render_player_form(
+                    existing_player=player,
+                    form_key="player_edit_form",
+                    submit_label="Simpan Perubahan",
+                )
+                if updated_player:
+                    st.session_state.player = updated_player
+                    self.player_information = updated_player
+                    self.assistant.player_information = updated_player
+                    st.success("Data player diperbarui! ✨")
+                    st.rerun()
+
+            if st.button("🗑️ Reset Data Player"):
+                delete_player()
+                st.session_state.clear()
+                st.rerun()
+
         self.render_messages()
 
         self.render_user_input()
-
-    

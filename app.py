@@ -1,5 +1,6 @@
 
-from data.player import generate_player_data
+from data.database import init_db, get_player
+from player_form import render_onboarding_screen
 from dotenv import load_dotenv
 import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
@@ -20,9 +21,14 @@ if __name__ == "__main__":
 
     st.set_page_config(page_title="Aks Junimo", layout="wide")
 
-    @st.cache_data(ttl=3600, show_spinner="Loading Player Data... ")
-    def get_player_data():
-        return generate_player_data(1)[0]
+    init_db()
+
+    if "player" not in st.session_state:
+        st.session_state.player = get_player()
+
+    if st.session_state.player is None:
+        render_onboarding_screen()
+        st.stop()
 
     @st.cache_resource(ttl=3600, show_spinner="Initializing Vector Store... ")
     def init_vectore_store(pdf_path):
@@ -47,11 +53,8 @@ if __name__ == "__main__":
             st.error(f"Failed to initialize vector store: {str(e)}")
             return None
 
-    player_data = get_player_data()
     vector_store = init_vectore_store("data/Stardew_Valley_Wiki.pdf")
 
-    if "player" not in st.session_state:
-        st.session_state.player = player_data
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "ai", "content": WELCOME_MESSAGE}]
 

@@ -3,9 +3,8 @@
 An AI-powered conversational assistant designed to help Stardew Valley players query game mechanics, NPC preferences, crops, schedules, and item details using Retrieval-Augmented Generation (RAG).
 
 =====================================
-1. OVERVIEW
+1 OVERVIEW
 =====================================
-
 Ask Junimo is a domain-specific AI chatbot built specifically for Stardew Valley players. Utilizing Retrieval-Augmented Generation (RAG), the application retrieves context directly from official game wiki data and guides to provide accurate, hallucination-free answers to player queries in real time.
 
 Whether you need to check crop growth cycles, determine NPC gift preferences, optimize bundle completion in the Community Center, or locate specific fish during seasonal weather conditions, Ask Junimo delivers precise and contextually relevant responses.
@@ -13,7 +12,6 @@ Whether you need to check crop growth cycles, determine NPC gift preferences, op
 =====================================
 2. KEY FEATURES
 =====================================
-
 - Domain-Specific Knowledge Base: Answers queries related to crops, NPC loved gifts, villager schedules, fish locations, mining, crafting, and festival events.
 - Retrieval-Augmented Generation (RAG): Combines vector search retrieval with Large Language Models (LLMs) to ensure high factual accuracy based on official game data.
 - Fast Semantic Search: Uses vector embeddings for high-precision context extraction and fast response retrieval.
@@ -22,7 +20,6 @@ Whether you need to check crop growth cycles, determine NPC gift preferences, op
 =====================================
 3. TECH STACK & ARCHITECTURE
 =====================================
-
 - Language: Python 3.9+
 - RAG & AI Framework: LangChain / LlamaIndex
 - Embedding Model: OpenAI Embeddings / HuggingFace Sentence Transformers
@@ -33,7 +30,6 @@ Whether you need to check crop growth cycles, determine NPC gift preferences, op
 =====================================
 4. GETTING STARTED
 =====================================
-
 Prerequisites:
   - Python 3.9+
   - Git
@@ -69,5 +65,5 @@ Run the Application:
 3. Information Retrieval: When a user submits a question (e.g., "What are Abigail's loved gifts?"), the system executes a similarity search to find the most relevant context chunks.
 4. Contextual Generation: Retrieved facts are injected into the prompt context provided to the LLM to generate an accurate, grounded response.
 
-=====================================
+
 Developed by Najla Tsabita (https://github.com/NajlaTsabita).

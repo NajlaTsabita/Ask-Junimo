@@ -2,24 +2,27 @@
 
 An AI-powered conversational assistant designed to help Stardew Valley players query game mechanics, NPC preferences, crops, schedules, and item details using Retrieval-Augmented Generation (RAG).
 
-==========================
+=====================================
 1. OVERVIEW
-==========================
+=====================================
+
 Ask Junimo is a domain-specific AI chatbot built specifically for Stardew Valley players. Utilizing Retrieval-Augmented Generation (RAG), the application retrieves context directly from official game wiki data and guides to provide accurate, hallucination-free answers to player queries in real time.
 
 Whether you need to check crop growth cycles, determine NPC gift preferences, optimize bundle completion in the Community Center, or locate specific fish during seasonal weather conditions, Ask Junimo delivers precise and contextually relevant responses.
 
-================================================================================
+=====================================
 2. KEY FEATURES
-================================================================================
+=====================================
+
 - Domain-Specific Knowledge Base: Answers queries related to crops, NPC loved gifts, villager schedules, fish locations, mining, crafting, and festival events.
 - Retrieval-Augmented Generation (RAG): Combines vector search retrieval with Large Language Models (LLMs) to ensure high factual accuracy based on official game data.
 - Fast Semantic Search: Uses vector embeddings for high-precision context extraction and fast response retrieval.
 - Interactive Chat Interface: Clean and intuitive user interface optimized for quick lookups during gameplay.
 
-================================================================================
+=====================================
 3. TECH STACK & ARCHITECTURE
-================================================================================
+=====================================
+
 - Language: Python 3.9+
 - RAG & AI Framework: LangChain / LlamaIndex
 - Embedding Model: OpenAI Embeddings / HuggingFace Sentence Transformers
@@ -27,9 +30,10 @@ Whether you need to check crop growth cycles, determine NPC gift preferences, op
 - LLM Integration: OpenAI GPT / Google Gemini / Ollama
 - User Interface: Streamlit / Gradio / React
 
-================================================================================
+=====================================
 4. GETTING STARTED
-================================================================================
+=====================================
+
 Prerequisites:
   - Python 3.9+
   - Git
@@ -56,28 +60,14 @@ Configure Environment Variables (.env):
 Run the Application:
   streamlit run app.py
 
-================================================================================
+=====================================
 5. HOW THE RAG SYSTEM WORKS
-================================================================================
+=====================================
+
 1. Document Processing: Stardew Valley reference data and wiki guides are chunked into structured text segments.
 2. Embedding & Storage: Text chunks are converted into dense vector embeddings and stored in a vector database.
 3. Information Retrieval: When a user submits a question (e.g., "What are Abigail's loved gifts?"), the system executes a similarity search to find the most relevant context chunks.
 4. Contextual Generation: Retrieved facts are injected into the prompt context provided to the LLM to generate an accurate, grounded response.
 
-================================================================================
-6. CONTRIBUTING
-================================================================================
-Contributions are welcome!
-1. Fork the repository.
-2. Create a new feature branch (git checkout -b feature/AmazingFeature).
-3. Commit your changes (git commit -m 'Add some AmazingFeature').
-4. Push to the branch (git push origin feature/AmazingFeature).
-5. Open a Pull Request.
-
-================================================================================
-7. LICENSE
-================================================================================
-Distributed under the MIT License. See LICENSE for more information.
-
+=====================================
 Developed by Najla Tsabita (https://github.com/NajlaTsabita).
-Inspired by Stardew Valley.

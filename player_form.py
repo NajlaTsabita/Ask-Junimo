@@ -37,14 +37,7 @@ def _build_player_dict(values):
     }
 
 
-def render_player_form(existing_player=None, form_key="player_setup_form", submit_label="Simpan & Mulai Main"):
-    """
-    Renders the input form. Returns the saved player dict once the user
-    submits successfully, otherwise returns None (form is still showing).
-
-    `existing_player` pre-fills the form — used for the "edit" flow so the
-    user doesn't have to retype everything.
-    """
+def render_player_form(existing_player=None, form_key="player_setup_form", submit_label="Save"):
     defaults = existing_player or {}
     default_skills = defaults.get("skills", {})
 
@@ -53,50 +46,50 @@ def render_player_form(existing_player=None, form_key="player_setup_form", submi
 
         with col1:
             player_name = st.text_input(
-                "Nama Pemain",
+                "Player Name",
                 value=defaults.get("player_name", ""),
-                placeholder="mis. Andi",
+                placeholder="e.g., Farmer Joe",
             )
             farm_name = st.text_input(
-                "Nama Farm",
+                "Farm Name",
                 value=defaults.get("farm_name", ""),
-                placeholder="mis. Rejeki Farm",
+                placeholder="e.g., Star Farm",
             )
             farm_type = st.selectbox(
-                "Tipe Farm",
+                "Farm Type",
                 FARM_TYPES,
                 index=FARM_TYPES.index(defaults["farm_type"]) if defaults.get("farm_type") in FARM_TYPES else 0,
             )
             current_season = st.selectbox(
-                "Musim Saat Ini",
+                "Current Season",
                 SEASONS,
                 index=SEASONS.index(defaults["current_season"]) if defaults.get("current_season") in SEASONS else 0,
             )
             current_year = st.number_input(
-                "Tahun Saat Ini (in-game)",
+                "Current Year (in-game)",
                 min_value=1, max_value=99,
                 value=int(defaults.get("current_year", 1)),
             )
 
         with col2:
             current_gold = st.number_input(
-                "Gold Saat Ini",
+                "Current Gold",
                 min_value=0,
                 value=int(defaults.get("current_gold", 500)),
                 step=100,
             )
             favorite_thing = st.text_input(
-                "Hal/Karakter Favorit (opsional)",
+                "Favorite Thing (optional)",
                 value=defaults.get("favorite_thing", ""),
-                placeholder="mis. Abigail, Fishing, Coffee",
+                placeholder="e.g., Cat, Fishing, Coffee",
             )
             pet_type = st.selectbox(
-                "Hewan Peliharaan",
+                "Pet Type",
                 PET_TYPES,
                 index=PET_TYPES.index(defaults["pet_type"]) if defaults.get("pet_type") in PET_TYPES else 0,
             )
             house_upgrade_level = st.selectbox(
-                "Level Upgrade Rumah",
+                "House Upgrade Level",
                 [0, 1, 2, 3],
                 index=int(defaults.get("house_upgrade_level", 0)),
             )
@@ -118,7 +111,7 @@ def render_player_form(existing_player=None, form_key="player_setup_form", submi
 
         if submitted:
             if not player_name.strip() or not farm_name.strip():
-                st.error("Nama Pemain dan Nama Farm wajib diisi ya!")
+                st.error("Player Name and Farm Name are required!")
                 return None
 
             player = _build_player_dict({
@@ -145,17 +138,16 @@ def render_player_form(existing_player=None, form_key="player_setup_form", submi
 
 
 def render_onboarding_screen():
-    """Full-page setup screen shown the first time (no player saved yet)."""
-    st.title("🌾 Selamat Datang di Ask Junimo!")
+    st.title("Welcome to Ask Junimo!")
     st.markdown(
-        "Sebelum mulai, ceritakan dulu soal farm kamu. "
-        "Data ini akan disimpan secara lokal dan dipakai Junimo Bot "
-        "untuk memberi saran yang sesuai kondisi farm-mu — jadi kamu **tidak perlu isi ulang** setiap kali membuka aplikasi."
+        "Before you start, tell us about your farm. "
+        "This data will be saved locally and used by the Ask Junimo Bot "
+        "to provide recommendations tailored to your farm's conditions — so you don't have to re-enter it every time you open the app."
     )
 
     player = render_player_form(form_key="player_setup_form")
 
     if player:
         st.session_state.player = player
-        st.success("Data tersimpan! Memuat Ask Junimo...")
+        st.success("Data saved! Loading Ask Junimo...")
         st.rerun()

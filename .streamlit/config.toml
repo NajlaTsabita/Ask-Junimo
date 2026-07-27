@@ -1,0 +1,7 @@
+[theme]
+primaryColor = "#034810"
+backgroundColor = "#f5f3ec"
+secondaryBackgroundColor = "#e3f7e4"
+textColor = "#111111"
+# Pilihan font bawaan 
+font = "sans serif"

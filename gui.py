@@ -1,6 +1,14 @@
 import streamlit as st
 from data.database import delete_player
 from player_form import render_player_form
+import base64
+
+def get_image_base64(img_path):
+    try:
+        with open(img_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode("utf-8")
+    except FileNotFoundError:
+        return ""
 
 class AssistantGUI:
     def __init__(self, assistant):
@@ -46,16 +54,22 @@ class AssistantGUI:
             st.subheader("Player Information")
 
             player = self.player_information
-            st.markdown(f"**👤 Name:** {player['player_name']}")
-            st.markdown(f"**🏡 Farm:** {player['farm_name']} ({player['farm_type']})")
-            st.markdown(f"**🗓️ Time:** {player['current_season']}, Year {player['current_year']}")
-            st.markdown(f"**🐶 Pet:** {player['pet_type']}")
-            st.markdown(f"**⭐ Favorite:** {player['favorite_thing']}")
-            
-  
-            st.metric(label="💰 Current Gold", value=f"{player['current_gold']:,} G")
 
-            with st.expander("💪 Player Skills (Level 1-10)"):
+            icon_name = get_image_base64("./data/The_Player_Icon.png")
+            icon_farm = get_image_base64("./data/Standard_Farm_Map_Icon.png")
+            icon_time = get_image_base64("./data/All_Seasons_Icon.png")
+            icon_pet = get_image_base64("./data/White_Chicken.png")
+            icon_fav = get_image_base64("./data/Favorite_Icon.png")
+            icon_gold = get_image_base64("./data/Gold.png")
+            
+            st.markdown(f'<img src="data:image/png;base64,{icon_name}" width="22" style="vertical-align: middle; margin-right: 5px;"> **Name:** {player["player_name"]}', unsafe_allow_html=True)
+            st.markdown(f'<img src="data:image/png;base64,{icon_farm}" width="22" style="vertical-align: middle; margin-right: 5px;"> **Farm:** {player["farm_name"]} ({player["farm_type"]})', unsafe_allow_html=True)
+            st.markdown(f'<img src="data:image/png;base64,{icon_time}" width="22" style="vertical-align: middle; margin-right: 5px;"> **Time:** {player["current_season"]}, Year {player["current_year"]}', unsafe_allow_html=True)
+            st.markdown(f'<img src="data:image/png;base64,{icon_pet}" width="22" style="vertical-align: middle; margin-right: 5px;"> **Pet:** {player["pet_type"]}', unsafe_allow_html=True)
+            st.markdown(f'<img src="data:image/png;base64,{icon_fav}" width="22" style="vertical-align: middle; margin-right: 5px;"> **Favorite:** {player["favorite_thing"]}', unsafe_allow_html=True)
+            st.markdown(f'<img src="data:image/png;base64,{icon_gold}" width="22" style="vertical-align: middle; margin-right: 5px;"> **Current Gold:** {player["current_gold"]:,} G', unsafe_allow_html=True)
+
+            with st.expander("Player Skills (Level 1-10)"):
                 st.caption(f"Farming (Lv {player['skills']['farming']})")
                 st.progress(player['skills']['farming'] * 10) 
                 
@@ -71,20 +85,20 @@ class AssistantGUI:
                 st.caption(f"Combat (Lv {player['skills']['combat']})")
                 st.progress(player['skills']['combat'] * 10)
 
-            with st.expander("✏️ Edit Data Player"):
+            with st.expander("Edit Player Data"):
                 updated_player = render_player_form(
                     existing_player=player,
                     form_key="player_edit_form",
-                    submit_label="Simpan Perubahan",
+                    submit_label="Save Changes",
                 )
                 if updated_player:
                     st.session_state.player = updated_player
                     self.player_information = updated_player
                     self.assistant.player_information = updated_player
-                    st.success("Data player diperbarui! ✨")
+                    st.success("Player data has been updated!")
                     st.rerun()
 
-            if st.button("🗑️ Reset Data Player"):
+            if st.button("Reset Player Data"):
                 delete_player()
                 st.session_state.clear()
                 st.rerun()

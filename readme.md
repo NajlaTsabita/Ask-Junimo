@@ -3,7 +3,7 @@
 An AI-powered conversational assistant designed to help Stardew Valley players query game mechanics, NPC preferences, crops, schedules, and item details using Retrieval-Augmented Generation (RAG).
 
 =====================================
-1 OVERVIEW
+OVERVIEW
 =====================================
 Ask Junimo is a domain-specific AI chatbot built specifically for Stardew Valley players. Utilizing Retrieval-Augmented Generation (RAG), the application retrieves context directly from official game wiki data and guides to provide accurate, hallucination-free answers to player queries in real time.
 
